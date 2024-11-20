@@ -26,7 +26,7 @@ echo "PID: $TSHARK_PID"
 echo "Tshark is running in the background with PID: $TSHARK_PID"
 
 
-for i in {1..$2}; do
+for i in $(seq 1 $2); do
     echo "Start download：$folder Freq: $i"
 
     # 记录开始时间
