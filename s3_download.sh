@@ -19,7 +19,7 @@ folder="s3://$BUCKET_NAME/llava-v1.6-mistral-7b-hf"
 echo $folder
 
 #sudo tshark -i enX0 -f "tcp" -Y "ssl.record.content_type == 23" -w ~/output.pcap &
-sudo tshark -i enX0 -f "tcp port 443" -b files:100 filesize:102400 -w /tmp/output.pcap &
+sudo sudo tshark -i enX0 -f "tcp port 443" -w /tmp/output.pcap &
 TSHARK_PID=$!  # 保存 tshark 进程的 PID
 echo "PID: $TSHARK_PID"
 echo "Tshark is running in the background with PID: $TSHARK_PID"
