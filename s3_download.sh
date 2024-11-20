@@ -20,7 +20,7 @@ echo $folder
 
 #sudo tshark -i enX0 -f "tcp" -Y "ssl.record.content_type == 23" -w ~/output.pcap &
 #sudo sudo tshark -i enX0 -f "tcp port 443" -w /tmp/output.pcap &
-sudo tshark -i enX0 -f "tcp port 443 and tcp[13] & 0x02 != 0" -w ~/output.pcap &
+sudo tshark -i enX0 -f "tcp port 443 and tcp[13] & 0x02 != 0" -w /tmp/output.pcap &
 TSHARK_PID=$!  # 保存 tshark 进程的 PID
 echo "PID: $TSHARK_PID"
 echo "Tshark is running in the background with PID: $TSHARK_PID"
