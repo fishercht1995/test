@@ -18,7 +18,8 @@ BUCKET_NAME="west1model$1"
 folder="s3://$BUCKET_NAME/llava-v1.6-mistral-7b-hf"
 echo $folder
 
-sudo tshark -i enX0 -f "tcp" -Y "ssl.record.content_type == 23" -w ~/output.pcap &
+#sudo tshark -i enX0 -f "tcp" -Y "ssl.record.content_type == 23" -w ~/output.pcap &
+sudo tshark -i enX0 -f "tcp" -b filesize:102400 -w /tmp/output.pcap &
 TSHARK_PID=$!  # 保存 tshark 进程的 PID
 echo "PID: $TSHARK_PID"
 echo "Tshark is running in the background with PID: $TSHARK_PID"
@@ -53,6 +54,6 @@ done
 echo "Stopping Tshark..."
 kill "$TSHARK_PID"
 echo "Tshark has been stopped."
-
+cp /tmp/output.pcap ~/output.pcap
 # 脚本结束
 echo "Script finished."
