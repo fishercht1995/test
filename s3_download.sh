@@ -48,6 +48,7 @@ for i in {1..$2}; do
     echo "--------------------------"
     sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches
     sleep $3
+done 
 
 echo "Stopping Tshark..."
 kill "$TSHARK_PID"
