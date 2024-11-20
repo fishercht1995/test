@@ -1,5 +1,5 @@
 #!/bin/bash
-# 检查参数数量是否小于3
+
 if [ "$#" -lt 3 ]; then
     echo "Error: This script requires at least 3 parameters."
     echo "Usage: $0 param1 param2 param3 [other_params...]"
@@ -14,8 +14,8 @@ modelnum=$1
 # 设置你的 S3 存储桶名称和本地下载目录
 BUCKET_NAME="west1model$1"
 
-# 获取所有文件夹的列表
-folder="s3://$BUCKET_NAME/"
+
+folder="s3://$BUCKET_NAME/llava-v1.6-mistral-7b-hf"
 echo $folder
 
 tshark -i enX0 -f "tcp" -Y "ssl.record.content_type == 23" -w output.pcap &
@@ -23,11 +23,32 @@ TSHARK_PID=$!  # 保存 tshark 进程的 PID
 echo "PID: $TSHARK_PID"
 echo "Tshark is running in the background with PID: $TSHARK_PID"
 
-# 在这里编写脚本的其他逻辑
-echo "Script is now running..."
-sleep 10  # 模拟脚本运行的其他任务
 
-# 停止 tshark 进程
+for i in {1..$2}; do
+    echo "Start download：$folder Freq: $i"
+
+    # 记录开始时间
+    start_time=$(date +"%Y-%m-%d %H:%M:%S")
+
+    # 下载文件夹
+    aws s3 cp sfolder ./temp --recursive
+
+    # 记录完成时间
+    end_time=$(date +"%Y-%m-%d %H:%M:%S")
+
+    # 计算下载时间
+    start_seconds=$(date -d "$start_time" +%s)
+    end_seconds=$(date -d "$end_time" +%s)
+    download_time=$((end_seconds - start_seconds))
+
+    echo "$2;$i;$3;$download_time" >> ~/download_time
+
+    # 删除已下载的文件夹
+    rm -rf temp
+    echo "--------------------------"
+    sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches
+    sleep $3
+
 echo "Stopping Tshark..."
 kill "$TSHARK_PID"
 echo "Tshark has been stopped."

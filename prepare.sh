@@ -15,4 +15,3 @@ pip install torchvision qwen-vl-utils
 pip install qwen-vl-utils
 pip install huggingface_hub
 sudo apt install wireshark tshark -y
-aws configure
