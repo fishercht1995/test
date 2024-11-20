@@ -31,7 +31,7 @@ for i in {1..$2}; do
     start_time=$(date +"%Y-%m-%d %H:%M:%S")
 
     # 下载文件夹
-    aws s3 cp sfolder ./temp --recursive
+    aws s3 cp $folder ./temp --recursive
 
     # 记录完成时间
     end_time=$(date +"%Y-%m-%d %H:%M:%S")
