@@ -5,7 +5,7 @@ if [ "$#" -lt 3 ]; then
     echo "Usage: $0 param1 param2 param3 [other_params...]"
     exit 1
 fi
-
+mkdir ~/out
 echo "Model source: $1"
 echo "Frequency: $2"
 echo "Time interval: $3"
@@ -54,6 +54,6 @@ done
 echo "Stopping Tshark..."
 kill "$TSHARK_PID"
 echo "Tshark has been stopped."
-cp /tmp/output.pcap ~/output.pcap
+sudo cp /tmp/*.pcap ~/out/
 # 脚本结束
 echo "Script finished."
