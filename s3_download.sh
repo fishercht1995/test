@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$#" -lt 3 ]; then
-    echo "Error: This script requires at least 3 parameters."
+    echo "Error: This script requires at least 4 parameters."
     echo "Usage: $0 param1 param2 param3 [other_params...]"
     exit 1
 fi
@@ -9,6 +9,7 @@ mkdir ~/out
 echo "Model source: $1"
 echo "Frequency: $2"
 echo "Time interval: $3"
+echo "Model name: $4"
 
 modelnum=$1
 # 设置你的 S3 存储桶名称和本地下载目录
@@ -20,14 +21,14 @@ echo $folder
 
 #sudo tshark -i enX0 -f "tcp" -Y "ssl.record.content_type == 23" -w ~/output.pcap &
 #sudo sudo tshark -i enX0 -f "tcp port 443" -w /tmp/output.pcap &
-sudo tshark -i enX0 -f "tcp port 443 and tcp[13] & 0x02 != 0" -w /tmp/output.pcap &
+sudo tshark -i enX0 -f "tcp port 443 and tcp[13] & 0x02 != 0" -w /tmp/output_$4.pcap &
 TSHARK_PID=$!  # 保存 tshark 进程的 PID
 echo "PID: $TSHARK_PID"
 echo "Tshark is running in the background with PID: $TSHARK_PID"
 
 
 for i in $(seq 1 $2); do
-    echo "Start download：$folder Freq: $i"
+    echo "Start download: $folder Freq: $i"
 
     # 记录开始时间
     start_time=$(date +"%Y-%m-%d %H:%M:%S")
@@ -43,7 +44,7 @@ for i in $(seq 1 $2); do
     end_seconds=$(date -d "$end_time" +%s)
     download_time=$((end_seconds - start_seconds))
 
-    echo "$2;$i;$3;$download_time" >> ~/download_time
+    echo "$2;$i;$3;$download_time" >> ~/download_time_$4
 
     # 删除已下载的文件夹
     rm -rf temp
