@@ -16,7 +16,7 @@ modelnum=$1
 BUCKET_NAME="west1model$1"
 
 
-folder="s3://$BUCKET_NAME/llava-v1.6-mistral-7b-hf"
+folder="s3://$BUCKET_NAME/$4"
 echo $folder
 
 #sudo tshark -i enX0 -f "tcp" -Y "ssl.record.content_type == 23" -w ~/output.pcap &
