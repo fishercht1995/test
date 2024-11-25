@@ -1,3 +1,4 @@
+source myenv/bin/activate
 if [ "$#" -lt 3 ]; then
     echo "Error: This script requires at least 4 parameters."
     echo "Usage: $0 param1 param2 param3 [other_params...]"
